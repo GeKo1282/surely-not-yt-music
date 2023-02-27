@@ -1,0 +1,18 @@
+:root {
+    --primary: #303030;
+    --accent: #561F7A;
+    --compliment: #BA5422;
+    
+    --background: #262626;
+    --box-bg: #303030;
+    
+    --button-bg-onhover: #2a2a2a;
+    --button-bg-red: #b832325e;
+    --button-bg-green: #4fad1580;
+
+    --text-bright: #a8a8a8;
+    --text-dark: rgb(114, 114, 114);
+
+    --red: #b83232;
+    --green: #4fad15;
+}
