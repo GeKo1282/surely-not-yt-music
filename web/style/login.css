@@ -13,6 +13,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 1000px;
+    min-height: 800px;
 }
 
 #main-box {
@@ -48,8 +50,10 @@ body {
 }
 
 .label {
-    color: var(--text-dark);
+    color: var(--text-bright);
     margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 12px;
 }
 
 .field {
@@ -69,23 +73,25 @@ body {
     transition: all 300ms ease;
 }
 
-.correct {
+#main-box > .correct {
     box-shadow: 0 0 3px rgba(77, 212, 36, 0.6);
 }
 
-.incorrect {
+#main-box > .incorrect {
     box-shadow: 0 0 3px rgba(212, 92, 36, 0.6);
 }
 
-#main-box:has(.field.incorrect) > #login-button {
+#main-box:has(.field.incorrect) > .button {
     background: var(--button-bg-red);
+    animation: shake 300ms linear;
 }
 
-#main-box:not(:has(.field:not(.correct))) > #login-button {
+#main-box:not(:has(.field:not(.correct))) > .button {
     background: var(--button-bg-green);
+    animation: shake-vertical 300ms linear;
 }
 
-#login-button {
+.button {
     box-shadow: 0 0 3px rgba(0, 0, 0, .6);
     height: 50px;
     padding: 10px;
@@ -105,7 +111,7 @@ body {
     transition: background 300ms ease;
 }
 
-#login-button:hover {
+.button:hover {
     background: var(--button-bg-onhover);
 }
 
@@ -121,4 +127,172 @@ body {
 #register {
     color: var(--green);
     cursor: pointer;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--text-bright);
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #4b4b4b;
+    margin: 8px 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* --------------------------------------------- REGISTER --------------------------------------------- */
+
+#back {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 30px;
+    width: 100%;
+    margin-bottom: 15px;
+    color: var(--text-bright);
+    fill: var(--text-bright);
+    cursor: pointer;
+}
+
+#back > svg {
+    height: 100%;
+    transform: translateY(-2px);
+    margin-right: 10px;
+}
+
+#back:hover {
+    color: var(--text-dark);
+    fill: var(--text-dark);
+}
+
+#password-checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 30px 30px 30px;
+    margin-bottom: 10px;
+}
+
+#password-checks > div {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+}
+
+#password-checks > .full-width {
+    grid-column: 1 / -1;
+    flex-wrap: nowrap;
+}
+
+#password-checks > .full-width > span {
+    background: var(--background);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+#password-checks > div > svg {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+#password-checks > div.correct {
+    color:rgba(77, 212, 36, 1);
+    fill: rgba(77, 212, 36, 1);
+}
+
+#password-checks > div:not(.correct) {
+    color:rgba(212, 92, 36, 1);
+    fill: rgba(212, 92, 36, 1);
+}
+
+#password-checks > div:not(.correct) > .x {
+    display: block;
+}
+
+#password-checks > div:not(.correct) > .v {
+    display: none;
+}
+
+#password-checks > div.correct > .x {
+    display: none;
+}
+
+#password-checks > div.correct > .v {
+    display: block;
+}
+
+#strength-box {
+    color: var(--text-bright);
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#strength-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 2px;
+    margin-top: 5px;
+}
+
+#strength-bar > div {
+    height: 100%;
+}
+
+#strength-bar > .red {
+    background: rgb(158, 54, 54);
+}
+
+#strength-bar > .yellow {
+    background: rgb(128, 128, 33);
+}
+
+#strength-bar > .green {
+    background: rgb(23, 95, 23);
+}
+
+#strength-bar > .blue {
+    background: rgb(36, 36, 107);
+}
+
+#strength-bar > div:not(.active) {
+    display: none;
+}
+ 
+
+@keyframes shake {
+    0% {transform: translateX(10px);}
+    30% {transform: translateX(-10px);}
+    60% {transform: translateX(8px);}
+    75% {transform: translateX(-6px);}
+    90% {transform: translateX(4px);}
+    100% {transform: translateX(0);}
+}
+
+@keyframes shake-vertical {
+    0% {transform: translateY(10px);}
+    30% {transform: translateY(-10px);}
+    60% {transform: translateY(8px);}
+    75% {transform: translateY(6px);}
+    90% {transform: translateY(4px);}
+    100% {transform: translateY(0);}
 }

@@ -26,3 +26,12 @@ addLoadEvent(() => {
         }
     }
 })
+
+async function login() {
+    let data = JSON.parse(await (await (await fetch("/rsa-data")).text()));
+    let chunk_length = (data.key_length / 8 - (2 * 256 / 8) - 2);
+    let res = Cipher.static_encrypt(JSON.stringify({}), data.key, data.separator,
+    chunk_length);
+    
+    console.log(res);
+}

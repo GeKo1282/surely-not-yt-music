@@ -1,0 +1,6 @@
+{
+    "SEPARATOR": "@@",
+    "KEY_LENGTH": 2048,
+    "DIRECTORIES": ["data"],
+    "KEYS_FILE": "./data/keys.json"
+}
