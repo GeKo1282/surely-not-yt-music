@@ -1,6 +1,6 @@
 import logging
 import sqlite3
-from typing import Union, Tuple, List
+from typing import Union, Tuple, List, Dict, Any
 
 
 class Database:
@@ -10,7 +10,7 @@ class Database:
         self.path: str = path
         self.name: str = name
         self.logger: logging.Logger = logger
-        self.columns = {table: self.get_columns(table) for table in self.get_tables()}
+        self.columns = {table: self.get_columns(table) for table in self.get_tables()} if self.get_tables() else {}
 
         if name in self.databases:
             raise Exception(f"Database with name {name} already exists!")
@@ -22,10 +22,16 @@ class Database:
         if name not in Database.databases:
             raise Exception(f"No database named {name}!")
         return Database.databases[name]
+    
+    def refresh_tables(self) -> None:
+        self.columns = {table: self.get_columns(table) for table in self.get_tables()} if self.get_tables() else {}
 
     def get_tables(self) -> List[str]:
         with sqlite3.connect(self.path) as database:
-            return [table for table in database.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchone()]
+            try:
+                return [table for table in database.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchone()]
+            except TypeError:
+                return None
 
     def get_columns(self, table: str) -> List[str]:
         with sqlite3.connect(self.path) as database:
@@ -47,20 +53,28 @@ class Database:
             for column in table_columns:
                 if column not in query_columns:
                     self.remove_column(table, column)
+        
+        self.refresh_tables()
 
     def drop_table(self, table: str):
         with sqlite3.connect(self.path) as database:
             database.execute(f"DROP TABLE {table}")
+        
+        self.refresh_tables()
 
     def add_column(self, table: str, column_name: str, column_definition: str):
         with sqlite3.connect(self.path) as database:
             database.execute(f"ALTER TABLE {table} ADD {column_name} {column_definition}")
 
+        self.refresh_tables()
+
     def remove_column(self, table: str, column_name: str):
         with sqlite3.connect(self.path) as database:
             database.execute(f"ALTER TABLE {table} DROP COLUMN {column_name}")
 
-    def insert(self, table: str, entries: list):
+        self.refresh_tables()
+
+    def insert(self, table: str, entries: List[Dict[str, Any]]):
         with sqlite3.connect(self.path) as database:
             val_list = self.columns[table]
             val_list.sort()
@@ -119,7 +133,7 @@ class Database:
     def fetch(self, table: str, var_str: str, var_dict: dict, columns: str = "*", fetchall: bool = True) -> Union[Tuple, List]:
         with sqlite3.connect(self.path) as database:
             if fetchall:
-                return database.execute(f"SELECT {columns} FROM {table} WHERE {var_str}", var_dict).fetchall()
+                return database.execute(f"SELECT {columns} FROM {table} {'WHERE' if var_str else ''} {var_str}", var_dict).fetchall()
             return database.execute(f"SELECT {columns} FROM {table} WHERE {var_str}", var_dict).fetchone()
 
     def check_if_exists(self, table: str, var_str: str, var_dict: dict) -> bool:

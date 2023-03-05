@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +8,9 @@
     <link rel="stylesheet" href="/style/root.css">
     <link rel="stylesheet" href="/style/login.css">
 
-    <script src="/scripts/sha512.js"></script>
-    <script src="/scripts/rsa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/node-forge@1.0.0/dist/forge.min.js"></script>
+    <script src="/script/sha512.js"></script>
+    <script src="/script/rsa.js"></script>
     <script src="/script/funcs.js"></script>
     <script src="/script/login.js"></script>
 </head>
@@ -19,6 +21,8 @@
             <div>Welcome back!</div>
             <div>It's good to see you again!</div>
         </div>
+        
+        <div id="invalid-text" style="display: none;">Invalid login / password!</div>
 
         <label for="email-field" class="label">EMAIL / PHONE NUMBER:</label>
         <input type="text" name="email-field" class="field" id="email-field">

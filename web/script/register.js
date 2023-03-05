@@ -22,10 +22,10 @@ addLoadEvent(() => {
     let text_span = document.getElementById("text-span");
 
     nickname_field.oninput = () => {
-        if ((4 <= nickname_field.value.length && nickname_field.value.length <= 64) && !nickname_field.classList.contains("correct")) {
+        if (4 <= nickname_field.value.length && nickname_field.value.length <= 64) {
             nickname_field.classList.add("correct")
             nickname_field.classList.remove("incorrect")
-        } else if (!(4 <= nickname_field.value.length && nickname_field.value.length <= 64) && !nickname_field.classList.contains("incorrect")) {
+        } else {
             nickname_field.classList.remove("correct")
             nickname_field.classList.add("incorrect")
         }
@@ -61,7 +61,7 @@ addLoadEvent(() => {
             one_digit_check.classList.remove("correct");
         }
 
-        if (valid_regEx.test(password_field.value)) {
+        if (valid_regEx.test(password_field.value) || password_field.value == "") {
             valid_check.classList.add("correct");
         } else {
             valid = false;
@@ -140,11 +140,19 @@ addLoadEvent(() => {
 
             text_span.innerText = "Veri gut";
             text_span.style.color = "#056dff";
-        }        
+        }
+        
+        if (repeat_password_field.value == password_field.value && repeat_password_field.value != "") {
+            repeat_password_field.classList.add("correct");
+            repeat_password_field.classList.remove("incorrect");
+        } else {
+            repeat_password_field.classList.remove("correct");
+            repeat_password_field.classList.add("incorrect");
+        }
     }
     
     repeat_password_field.oninput = () => {
-        if (repeat_password_field.value == password_field.value) {
+        if (repeat_password_field.value == password_field.value && repeat_password_field.value != "") {
             repeat_password_field.classList.add("correct");
             repeat_password_field.classList.remove("incorrect");
         } else {
@@ -153,5 +161,52 @@ addLoadEvent(() => {
         }
     }
 })
+
+async function register() {
+    var email_field = document.getElementById("email-field");
+    var nickname_field = document.getElementById("nickname-field");
+    var password_field = document.getElementById("register-password-field");
+    var repeat_password_field = document.getElementById("repeat-password-field");
+
+    if(!(email_field.classList.contains("correct") && nickname_field.classList.contains("correct") && password_field.classList.contains("correct") && repeat_password_field.classList.contains("correct"))) {
+        email_field.oninput();
+        nickname_field.oninput();
+        password_field.oninput();
+        repeat_password_field.oninput();
+        return;
+    }
+
+    var encrypted = await window.cipher.encrypt(JSON.stringify({
+        email: email_field.value,
+        nickname: nickname_field.value,
+        password_hash: sha512(password_field.value),
+        key: window.cipher.public_key[0]
+    }), {key: window.data.key});
+
+    var fetched = await fetch("/register", {
+        method: "POST",
+        body: encrypted
+    });
+
+    if ((await fetched.json()).hasOwnProperty("message")) {
+        var email_exists = document.getElementById("email-exists");
+        email_exists.style.display = "flex";
+        setTimeout(() => {
+            email_exists.style.display = "none";
+        }, 5000)
+    }
+
+    var response = JSON.parse(await window.cipher.decrypt(await fetched.text()));
+
+    if(response.hasOwnProperty('message')) {
+        console.log('message');
+    }
+
+    window.localStorage.setItem("public_key", window.cipher.public_key[0]);
+    window.localStorage.setItem("private_key", window.cipher.private_key);
+    window.localStorage.setItem("token", response['token']);
+
+    window.location.replace("/app");
+}
 
 

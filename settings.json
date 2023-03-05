@@ -1,6 +1,13 @@
 {
+    "HTTP_PORT": 80,
+    "WEBSOCKET_PORT": 2137,
     "SEPARATOR": "@@",
     "KEY_LENGTH": 2048,
     "DIRECTORIES": ["data"],
-    "KEYS_FILE": "./data/keys.json"
+    "KEYS_FILE": "./data/keys.json",
+    "DATABASE_PATHS": {
+        "users": "./data/users.db"
+    },
+    "DATETIME_FORMAT": "%H:%M:%S %m-%d-%Y",
+    "DEBUG": true
 }

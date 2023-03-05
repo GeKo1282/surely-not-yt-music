@@ -19,6 +19,7 @@ class Cipher:
     def __import_key(key: Union[str, RSA.RsaKey, None], default_key: RSA.RsaKey) -> Union[RSA.RsaKey, None]:
         if not key:
             return default_key
+        
         elif type(key) is str:
             try:
                 return RSA.import_key(key)
@@ -54,6 +55,9 @@ class Cipher:
     def encrypt(self, text: str, *, key: Union[RSA.RsaKey, str] = None, chunk_length: int = None, separator: str = None, chunk_func=None) -> str:
         key = self.__import_key(key, self.private_key.public_key() if self.private_key else None)
 
+        if type(text) is not str:
+            raise InvalidType(f"Invalid type for text! Text should be str, not {type(text)}")
+
         if not key:
             raise Exception("Keys are not generated, neither key was provided to function or it was incorrect!")
 
@@ -81,6 +85,9 @@ class Cipher:
     def decrypt(self, text: str, *, key: Union[RSA.RsaKey, str] = None, separator: str = None):
         key = self.__import_key(key, self.private_key if self.private_key else None)
 
+        if type(text) is not str:
+            raise InvalidType(f"Invalid type for text! Text should be str, not {type(text)}")
+
         if not key:
             raise Exception("Keys are not generated, neither key was provided to function or it was incorrect!")
 
@@ -92,6 +99,14 @@ class Cipher:
             try:
                 out += self.__decrypt(key, chunk)
             except ValueError:
-                out += b64decode(chunk.encode()).decode('utf-8')
+                raise IncorrecEncryption("Cannot decode message!")
 
         return out
+
+class IncorrecEncryption(Exception): 
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
+
+class InvalidType(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)

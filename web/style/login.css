@@ -9,7 +9,7 @@ body, html {
 
 body {
     margin: 0;
-    background: var(--background);
+    background: var(--login-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,7 +18,7 @@ body {
 }
 
 #main-box {
-    background: var(--box-bg);
+    background: var(--login-box-bg);
     padding: 30px 20px;
     border-radius: 5px;
     box-shadow: 0 0 3px rgba(0, 0, 0, .3);
@@ -27,6 +27,28 @@ body {
     justify-content: start;
     flex-direction: column;
     width: 450px;
+    position: relative;
+}
+
+#invalid-text {
+    position: absolute;
+    top: 95px;
+    width: calc(100% - 40px);
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--compliment);
+    margin-bottom: 25px;
+}
+
+#email-exists {
+    position: absolute;
+    width: calc(100% - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 145px;
+    color: var(--compliment);
 }
 
 #header {
@@ -73,6 +95,26 @@ body {
     transition: all 300ms ease;
 }
 
+.field#email-field.incorrect {
+    animation: shake 300ms linear;
+}
+
+.field#password-field.incorrect, .field#nickname-field.incorrect {
+    animation: shake 300ms linear 100ms;
+}
+
+.field#register-password-field.incorrect {
+    animation: shake 300ms linear 200ms;
+}
+
+.field#repeat-password-field.incorrect {
+    animation: shake 300ms linear 300ms;
+}
+
+.field.correct {
+    animation: shake-vertical 300ms linear;
+}
+
 #main-box > .correct {
     box-shadow: 0 0 3px rgba(77, 212, 36, 0.6);
 }
@@ -84,14 +126,33 @@ body {
 #main-box:has(.field.incorrect) > .button {
     background: var(--button-bg-red);
     animation: shake 300ms linear;
+    cursor: not-allowed;
+}
+
+#main-box:has(.field.incorrect) > .button:hover {
+    transition: background 100ms ease;
+    background: var(--button-bg-red-onhover);
+}
+
+#main-box:has(.field.incorrect) > .button:active {
+    background: var(--button-bg-red-onpress);
 }
 
 #main-box:not(:has(.field:not(.correct))) > .button {
     background: var(--button-bg-green);
-    animation: shake-vertical 300ms linear;
+    animation: shake-vertical 300ms linear 100ms;
 }
 
-.button {
+#main-box:not(:has(.field:not(.correct))) > .button:hover {
+    transition: background 100ms ease;
+    background: var(--button-bg-green-onhover);
+}
+
+#main-box:not(:has(.field:not(.correct))) > .button:active {
+    background: var(--button-bg-green-active);
+}
+
+#main-box > .button {
     box-shadow: 0 0 3px rgba(0, 0, 0, .6);
     height: 50px;
     padding: 10px;
@@ -104,14 +165,14 @@ body {
     justify-content: center;
     
     user-select: none;
-    cursor: pointer;
+    cursor: default;
     margin-top: 20px;
     margin-bottom: 15px;
 
     transition: background 300ms ease;
 }
 
-.button:hover {
+#main-box > .button:hover {
     background: var(--button-bg-onhover);
 }
 
@@ -137,28 +198,6 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #4b4b4b;
-    margin: 8px 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #666;
-}
-
-::-webkit-scrollbar-corner {
-    background: transparent;
-}
-
 /* --------------------------------------------- REGISTER --------------------------------------------- */
 
 #back {
@@ -171,6 +210,7 @@ input:-webkit-autofill:active {
     color: var(--text-bright);
     fill: var(--text-bright);
     cursor: pointer;
+    user-select: none;
 }
 
 #back > svg {
@@ -289,10 +329,72 @@ input:-webkit-autofill:active {
 }
 
 @keyframes shake-vertical {
-    0% {transform: translateY(10px);}
-    30% {transform: translateY(-10px);}
-    60% {transform: translateY(8px);}
-    75% {transform: translateY(6px);}
-    90% {transform: translateY(4px);}
+    0% {transform: translateY(5px);}
+    30% {transform: translateY(-5px);}
+    60% {transform: translateY(4px);}
+    75% {transform: translateY(3px);}
+    90% {transform: translateY(2px);}
     100% {transform: translateY(0);}
+}
+
+@media only screen and (any-pointer: coarse) {
+    body {
+        background: var(--login-box-bg);
+        min-width: none;
+        min-height: none;
+    }
+    
+    #main-box {
+        padding: 30px 20px;
+        border-radius: 0;
+        box-shadow: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    #header {
+        margin-bottom: 20vh;
+    }
+
+    #header > div:first-child {
+        font-size: 30vw;
+    }
+    
+    #header > div:last-child {
+        font-size: 24vw;
+    }
+
+    .label {
+        font-size: 12vw;
+    }
+
+    #main-box > .field, #main-box > .button {
+        height: 32vh;
+        font-size: 12vh;
+        border-radius: 5vw;
+        margin-bottom: 5vh;
+    }
+
+    #forgotten-password, #register {
+        font-size: 8vh;
+        margin-bottom: 5vh;
+    }
+
+    #back {
+        height: 10vh;
+        font-size: 8vh;
+        margin-bottom: 4vh;
+    }
+
+    body#register #header {
+        margin-bottom: 10vh;
+    }
+
+    #password-checks {
+        grid-template-rows: 6vh 6vh 6vh;
+    }
+
+    #password-checks > div {
+        font-size: 6vh;
+    }
 }
