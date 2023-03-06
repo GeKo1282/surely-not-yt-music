@@ -12,11 +12,15 @@ body, html {
 
 body {
     margin: 0;
-    background: var(--background);
+    min-width: 1200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 1200px;
+    background: var(--background);
+}
+
+#player {
+    min-width: 1050px;
 }
 
 /* -------------------------------------------- MAIN BOX ------------------------------------ */
@@ -185,6 +189,197 @@ body {
     margin-bottom: 120px !important;
 }
 
+
+/*------------------------------------- HOMEPAGES ----------------------------------------------*/
+
+#home-choose {
+    font-size:14px;
+    color: var(--text-bright);
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    margin-left:10px;
+    
+}
+.home-choice {
+    margin-top:30px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .9);
+    border-radius: 5px;
+    background-color: var(--button-bg-onhover);
+    padding:10px;
+    margin:5px;
+    font-size:16px;
+    transition: all 300ms ease;
+}
+.home-choice:hover {
+transform: scale(110%);
+
+}
+
+
+#home-mini-logo{
+    font-size:18px;
+    color: var(--text-darker);
+    margin-top:20px;
+    margin-left:10px;
+}
+#home-quick-picks {
+    font-size:28px;
+    color: var(--text-bright);
+    margin-top:10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-left:10px;
+}
+
+.home-kwadrat{
+    height: 48px;
+    width: 48px;
+    background-color: var(--button-bg-red);
+    margin-left:10px;
+}
+.home-example-song {
+    font-size: 20px;
+    color:var(--text-bright);
+}
+
+.home-song-window {
+    display:flex;
+    
+}
+
+.home-alignment {
+    display:flex;
+    flex-direction: column;
+    margin:5px;
+}
+.we-love-mach-test{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    font-size:16px;
+    color:var(--text-darker); 
+    
+}
+
+.home-example-album {
+    padding-left:5px;
+}
+
+/*shrex 2*/
+
+.home-listen-again-main {
+    display:flex;
+    margin-top:40px;
+
+}
+.home-kwadrat-profile{
+    height: 48px;
+    width: 48px;
+    background-color: var(--button-bg-red);
+    margin-left:10px;
+    cursor:pointer;
+}
+
+.home-profile-name{
+    font-size: 18px;
+    color:var(--text-darker);
+}
+
+.home-listen-again-text {
+    font-size: 28px;
+    color:var(--text-bright);
+    font-weight: bold;
+    cursor:pointer;
+   
+}
+.home-listen-again-text:hover{
+    text-decoration: underline;
+}
+
+.home-listen-again {
+    display:flex;
+    flex-direction: column;
+    margin:5px;
+}
+
+.home-kwadrat-songs {
+    height: 180px;
+    width: 180px;
+    background-color: var(--button-bg-green);
+    margin-left:10px;
+    cursor:pointer;
+
+}
+
+.home-big-example-song {
+    font-size:20px;
+    color:var(--text-bright);
+    margin-left:10px;
+}
+
+.home-big-exmaple-singer {
+    font-size: 16px;
+    color:var(--text-dark);
+    margin-left:10px;
+    cursor:pointer;
+
+}
+.home-big-exmaple-singer:hover{
+    text-decoration: underline;
+}
+.home-listen-again-songs{
+    margin-top:10px;
+}
+
+.home-mixed-for-you-main {
+    font-size: 28px;
+    color:var(--text-bright);
+    font-weight: bold;
+    cursor:pointer;
+    margin-top:30px;
+    margin-left:10px
+}
+.home-mixed-for-you-main:hover {
+    text-decoration: underline;
+}
+.home-mixed-for-you-name {
+    font-size:20px;
+    color:var(--text-bright);
+    margin-left:10px;
+    cursor:pointer;
+}
+.home-mixed-for-you-name:hover{
+    text-decoration: underline;
+}
+.home-mixed-for-you-singers {
+    font-size:16px;
+    color:var(--text-dark);
+    margin-left:10px;
+}
+/*shrex3 */
+.home-forgotten-fav-main {
+    font-size: 28px;
+    color:var(--text-bright);
+    font-weight: bold;
+    cursor:pointer;
+    margin-top:50px;
+    margin-left:10px;
+    margin-bottom:10px;
+}
+.home-forgotten-fav-main:hover{
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
 #playlist {
     height: 50%;
     display: flex;
@@ -228,12 +423,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    color: var(--text-bright);
     font-size:28px;
     width:100%;
+    gap: 15px;
+    padding: 0 20px;
 }
 
-.exp-page {    
+.explore-bar-button {    
+    flex: 1;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, .6);
     border-radius: 10px;
@@ -243,7 +440,14 @@ body {
     width:400px;
     display:flex;
     align-items: center;
-    justify-content: center;   
+    justify-content: center;  
+    transition: all 300ms ease;
+    color: var(--text-bright);
+}
+
+.explore-bar-button:hover {
+    transform: scale(1.05);
+    color: var(--text-dark);
 }
 
 #albums-singles {
@@ -474,6 +678,14 @@ body {
     height: 45%;
 }
 
+#player.playing #controls > #play-pause > :first-child {
+    display: none;
+}
+
+#player:not(.playing) #controls > #play-pause > :last-child {
+    display: none;
+}
+
 #controls > * > svg {
     height: 100%;
     width: 100%;
@@ -552,6 +764,22 @@ body {
     fill: var(--text-dark);
 }
 
+#player.like #track-like > :first-child {
+    display: none;
+}
+
+#player:not(.like) #track-like > :last-child {
+    display: none;
+}
+
+#player.unlike #track-unlike > :first-child {
+    display: none;
+}
+
+#player:not(.unlike) #track-unlike > :last-child {
+    display: none;
+}
+
 #track-like > svg, #track-unlike > svg, #more-options > svg {
     height: 100%;
     width: 100%;
@@ -579,4 +807,31 @@ body {
 #controls-playlist > div > svg {
     height: 100%;
     width: 100%;
+}
+
+#player.muted #controls-playlist > #volmue > :first-child {
+    display: none;
+}
+
+#player:not(.muted) #controls-playlist > #volmue > :last-child {
+    display: none;
+}
+
+#player:not(.repeat) #controls-playlist > #repeat > svg,
+#player:not(.repeat-one) #controls-playlist > #repeat > svg {
+    stroke-width: .5;
+    stroke: var(--elem-bg);
+}
+
+#player.repeat-one #controls-playlist > #repeat > :first-child {
+    display: none;
+}
+
+#player:not(.repeat-one) #controls-playlist > #repeat > :last-child {
+    display: none;
+}
+
+#player:not(.randomize) #controls-playlist > #randomize > svg {
+    stroke-width: .5;
+    stroke: var(--elem-bg);
 }
