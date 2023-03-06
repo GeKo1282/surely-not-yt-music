@@ -52,6 +52,17 @@ function change_subpage(subpage) {
     document.getElementById(`${subpage}-page`).style.display = '';
 }
 
+function change_explore_subpage(subpage) {
+    var subpages = ['home', 'new-releases', 'charts', 'moods-and-genres'];
+    subpages.forEach((page) => {
+        if (page != subpage) {
+            document.getElementById(`explore-${page}-page`).style.display = 'none';
+        }
+    })
+
+    document.getElementById(`explore-${subpage}-page`).style.display = '';
+}
+
 function open_search() {
     document.getElementById('search-box').style.display = '';
     document.getElementById('search-query').focus();

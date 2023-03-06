@@ -1,4 +1,4 @@
 orjson
-Crypto
+pycryptodome
 flask[async]
 flask-session

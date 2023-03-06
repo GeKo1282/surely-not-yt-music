@@ -6,7 +6,8 @@
     "DIRECTORIES": ["data"],
     "KEYS_FILE": "./data/keys.json",
     "DATABASE_PATHS": {
-        "users": "./data/users.db"
+        "users": "./data/users.db",
+        "tracks": "./data/tracks.db"
     },
     "DATETIME_FORMAT": "%H:%M:%S %m-%d-%Y",
     "DEBUG": true
